@@ -132,18 +132,18 @@ public class RPGCharacterControllerFREE : MonoBehaviour{
 	/// Input abstraction for easier asset updates using outside control schemes.
 	/// </summary>
 	void Inputs(){
-		inputDashHorizontal = Input.GetAxisRaw("DashHorizontal");
-		inputDashVertical = Input.GetAxisRaw("DashVertical");
-		inputHorizontal = Input.GetAxisRaw("Horizontal");
+        inputDashHorizontal = Input.GetAxisRaw("DashHorizontal");
+        inputDashVertical = Input.GetAxisRaw("DashVertical");
+        inputHorizontal = Input.GetAxisRaw("Horizontal");
 		inputVertical = Input.GetAxisRaw("Vertical");
-		inputLightHit = Input.GetButtonDown("LightHit");
-		inputDeath = Input.GetButtonDown("Death");
-		inputAttackL = Input.GetButtonDown("AttackL");
-		inputAttackR = Input.GetButtonDown("AttackR");
-		inputCastL = Input.GetButtonDown("CastL");
-		inputCastR = Input.GetButtonDown("CastR");
-		inputBlock = Input.GetAxisRaw("TargetBlock");
-		inputJump = Input.GetButtonDown("Jump");
+        inputLightHit = Input.GetButtonDown("LightHit");
+        inputDeath = Input.GetButtonDown("Death");
+        inputAttackL = Input.GetButtonDown("AttackL");
+        inputAttackR = Input.GetButtonDown("AttackR");
+        inputCastL = Input.GetButtonDown("CastL");
+        inputCastR = Input.GetButtonDown("CastR");
+        inputBlock = Input.GetAxisRaw("TargetBlock");
+        inputJump = Input.GetButtonDown("Jump");
 	}
 
 	#endregion

@@ -1642,6 +1642,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1656,6 +1657,11 @@ MonoBehaviour:
   target: {fileID: 0}
   targetDashDirection: {x: 0, y: 0, z: 0}
   sceneCamera: {fileID: 0}
+  canMove: 1
+  walkSpeed: 2
+  runSpeed: 8
+  slopeAmount: 0.5
+  onAllowableSlope: 0
   useNavMesh: 0
   goal: {fileID: 0}
   gravity: -9.8
@@ -1669,11 +1675,6 @@ MonoBehaviour:
   inAirSpeed: 8
   rollSpeed: 8
   rollduration: 0.5
-  canMove: 1
-  walkSpeed: 2
-  runSpeed: 8
-  slopeAmount: 0.5
-  onAllowableSlope: 0
   weapon: 0
   isRelax: 0
   canAction: 1
@@ -1713,9 +1714,11 @@ SkinnedMeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: ad8c2bee857aaca4dbcf348b7e988a44, type: 2}
   m_StaticBatchInfo:
@@ -1728,6 +1731,7 @@ SkinnedMeshRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
