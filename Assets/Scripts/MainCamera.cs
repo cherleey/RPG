@@ -25,11 +25,11 @@ public class MainCamera : MonoBehaviour {
 	void Update ()
     {
         distanceBtwCameraCharacter = Vector3.Distance(transform.position, characterObj.transform.position);
-        InputBtn();
+        Inputs();
         CameraMove();
     }
 
-    void InputBtn()
+    void Inputs()
     {
         inputCameraRotateRight = Input.GetAxisRaw("CameraRotateRight");
         inputCameraRotateLeft = Input.GetAxisRaw("CameraRotateLeft");

@@ -10,8 +10,11 @@ public enum Weapon{
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
 public class RPGCharacterControllerFREE : MonoBehaviour{
-	
-	#region Variables
+
+    #region Variables
+
+    float timeAccForMouseMove = 0f;
+    bool isDragRightBtn = false;
 
 	//Components.
 	Rigidbody rb;
@@ -35,7 +38,7 @@ public class RPGCharacterControllerFREE : MonoBehaviour{
 	public bool onAllowableSlope;
 
 	//Navmesh.
-	public bool useNavMesh = false;
+	public bool useNavMesh = true;
 	private float navMeshSpeed;
 	public Transform goal;
 
@@ -101,13 +104,15 @@ public class RPGCharacterControllerFREE : MonoBehaviour{
 	bool inputAttackL;
 	bool inputCastL;
 	bool inputCastR;
-	bool inputJump;
+	bool inputJump = false;
+    float inputMouseLeftClick = 0.0f;
+    float inputMouseRightClick = 0.0f;
 
-	#endregion
+    #endregion
 
-	#region Initialization and Inputs
+    #region Initialization and Inputs
 
-	void Start(){
+    void Start(){
 		//Find the Animator component.
 		if(animator = GetComponentInChildren<Animator>()){
 		}
@@ -143,8 +148,10 @@ public class RPGCharacterControllerFREE : MonoBehaviour{
         inputCastL = Input.GetButtonDown("CastL");
         inputCastR = Input.GetButtonDown("CastR");
         inputBlock = Input.GetAxisRaw("TargetBlock");
-        inputJump = Input.GetButtonDown("Jump");
-	}
+        //inputJump = Input.GetButtonDown("Jump");
+        inputMouseLeftClick = Input.GetAxisRaw("MouseLeftClick");
+        inputMouseRightClick = Input.GetAxisRaw("MouseRightClick");
+    }
 
 	#endregion
 
@@ -197,19 +204,32 @@ public class RPGCharacterControllerFREE : MonoBehaviour{
 		else{
 			agent.enabled = false;
 		}
-		//Navigate to click.
-		if(Input.GetMouseButtonDown(0))
-		{
-			if(useNavMesh)
-			{
-				RaycastHit hit;
-				if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100)) {
-					agent.destination = hit.point;
-				}
-			}
-		}
-		//Slow time.
-		if(Input.GetKeyDown(KeyCode.T)){
+        //Navigate to click.
+        if (inputMouseRightClick != 0f)
+        {
+            agent.isStopped = false;
+            timeAccForMouseMove += Time.deltaTime;
+
+            if (timeAccForMouseMove >= 0.3f)
+                isDragRightBtn = true;
+
+            if (useNavMesh)
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100))
+                {
+                    agent.destination = hit.point;
+                }
+            }
+        }
+        else if (isDragRightBtn)
+        {
+            isDragRightBtn = false;
+            agent.isStopped = true;
+            timeAccForMouseMove = 0f;
+        }
+        //Slow time.
+        if (Input.GetKeyDown(KeyCode.T)){
 			if(Time.timeScale != 1){
 				Time.timeScale = 1;
 			}
@@ -303,10 +323,10 @@ public class RPGCharacterControllerFREE : MonoBehaviour{
 		inputVec = inputHorizontal * right + inputVertical * forward;
 	}
 
-	/// <summary>
-	/// Rotate character towards movement direction.
-	/// </summary>
-	void RotateTowardsMovementDir(){
+    /// <summary>
+    /// Rotate character towards movement direction.
+    /// </summary>
+    void RotateTowardsMovementDir(){
 		if(inputVec != Vector3.zero && !isStrafing && !isRolling){
 			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(inputVec), Time.deltaTime * rotationSpeed);
 		}
@@ -319,7 +339,7 @@ public class RPGCharacterControllerFREE : MonoBehaviour{
 	float UpdateMovement(){
 		if(!useNavMesh){
 			CameraRelativeMovement();
-		}
+        }
 		Vector3 motion = inputVec;
 		if(isGrounded){
 			//Reduce input for diagonal movement.

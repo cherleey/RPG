@@ -40,10 +40,7 @@ public class PlayableCharater : MonoBehaviour {
                 float velocityXel = transform.InverseTransformDirection(rb.velocity).x;
                 float velocityZel = transform.InverseTransformDirection(rb.velocity).z;
 
-                animator.SetFloat("Velocity X", velocityXel / runSpeed);
-                animator.SetFloat("Velocity Z", velocityZel / runSpeed);
                 agent.destination = hit.point;
-                animator.SetBool("Moving", true);
             }
         }
     }
