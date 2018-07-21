@@ -28,20 +28,19 @@ public class PlayableCharater : MonoBehaviour {
 
     void Move()
     {
-        if(inputMouseRightClick != 0.0f)
-        {
-            NavMeshAgent agent = GetComponent<NavMeshAgent>();
-            RaycastHit hit;
+        //if(inputMouseRightClick != 0.0f)
+        //{
+        //    NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        //    RaycastHit hit;
 
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
-            {
-                float runSpeed = 100.0f;
-                Rigidbody rb = GetComponent<Rigidbody>();
-                float velocityXel = transform.InverseTransformDirection(rb.velocity).x;
-                float velocityZel = transform.InverseTransformDirection(rb.velocity).z;
+        //    if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
+        //    {
+        //        Rigidbody rb = GetComponent<Rigidbody>();
+        //        float velocityXel = transform.InverseTransformDirection(rb.velocity).x;
+        //        float velocityZel = transform.InverseTransformDirection(rb.velocity).z;
 
-                agent.destination = hit.point;
-            }
-        }
+        //        agent.destination = hit.point;
+        //    }
+        //}
     }
 }

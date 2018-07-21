@@ -293,7 +293,8 @@ Prefab:
       propertyPath: canJump
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114960055588776520, guid: d9bd65af70b725941b730ca7f8ff6705, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: d9bd65af70b725941b730ca7f8ff6705, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1075177632
@@ -458,3 +459,4 @@ MonoBehaviour:
   zoomSpeed: 500
   maxDistanceBtwCameraCharacter: 25
   minDistanceBtwCameraCharacter: 3
+  mouseLock: 1

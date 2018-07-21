@@ -98,15 +98,15 @@ public class RPGCharacterControllerFREE : MonoBehaviour{
 	float inputDashVertical = 0f;
 	float inputDashHorizontal = 0f;
 	float inputBlock = 0f;
-	bool inputLightHit;
+    float inputMouseLeftClick = 0.0f;
+    float inputMouseRightClick = 0.0f;
+    bool inputLightHit;
 	bool inputDeath;
 	bool inputAttackR;
 	bool inputAttackL;
 	bool inputCastL;
 	bool inputCastR;
 	bool inputJump = false;
-    float inputMouseLeftClick = 0.0f;
-    float inputMouseRightClick = 0.0f;
 
     #endregion
 
@@ -210,7 +210,7 @@ public class RPGCharacterControllerFREE : MonoBehaviour{
             agent.isStopped = false;
             timeAccForMouseMove += Time.deltaTime;
 
-            if (timeAccForMouseMove >= 0.3f)
+            if (timeAccForMouseMove >= 0.5f)
                 isDragRightBtn = true;
 
             if (useNavMesh)
@@ -226,6 +226,11 @@ public class RPGCharacterControllerFREE : MonoBehaviour{
         {
             isDragRightBtn = false;
             agent.isStopped = true;
+            timeAccForMouseMove = 0f;
+        }
+        else
+        {
+            isDragRightBtn = false;
             timeAccForMouseMove = 0f;
         }
         //Slow time.

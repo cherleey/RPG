@@ -26,7 +26,7 @@ public class MainCamera : MonoBehaviour {
     {
         distanceBtwCameraCharacter = Vector3.Distance(transform.position, characterObj.transform.position);
         Inputs();
-        CameraMove();
+        CameraMove();        
     }
 
     void Inputs()
