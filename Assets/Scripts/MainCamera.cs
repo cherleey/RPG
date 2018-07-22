@@ -4,21 +4,27 @@ using UnityEngine;
 
 public class MainCamera : MonoBehaviour {
 
-    public float cameraRotationSpeed = 100.0f;
-    public float zoomSpeed = 500.0f;
-    public float maxDistanceBtwCameraCharacter = 25.0f;
-    public float minDistanceBtwCameraCharacter = 3.0f;
+    public float zoomSpeed = 500f;
+    public float maxDistanceBtwCameraCharacter = 25f;
+    public float minDistanceBtwCameraCharacter = 3f;
+    public bool mouseLock = true;
+    public bool isTopView = false;
 
     GameObject characterObj = null;
-    float inputCameraRotateRight = 0.0f;
-    float inputCameraRotateLeft = 0.0f;
-    float inputCameraZoom = 0.0f;
-    float distanceBtwCameraCharacter = 0.0f;
+    GameObject cameraPointObj = null;    
+
+    float inputCameraZoom = 0f;
+    bool inputViewMode;
+
+    float distanceBtwCameraCharacter = 0f;
+    float timeAccForViewMode = 0f;
+    bool viewModeChangeEnable = false;
 
     // Use this for initialization
     void Start ()
     {
         characterObj = GameObject.Find("RPG-Character");
+        cameraPointObj = GameObject.Find("Camera Point");
     }
 	
 	// Update is called once per frame
@@ -31,29 +37,53 @@ public class MainCamera : MonoBehaviour {
 
     void Inputs()
     {
-        inputCameraRotateRight = Input.GetAxisRaw("CameraRotateRight");
-        inputCameraRotateLeft = Input.GetAxisRaw("CameraRotateLeft");
         inputCameraZoom = Input.GetAxis("Mouse ScrollWheel");
+        inputViewMode = Input.GetButtonDown("ViewMode");
     }
 
     void CameraMove()
     {
-        if (inputCameraRotateRight != 0.0f)
-            transform.RotateAround(characterObj.transform.position, Vector3.up, -cameraRotationSpeed * Time.deltaTime);
-
-        if (inputCameraRotateLeft != 0.0f)
-            transform.RotateAround(characterObj.transform.position, Vector3.up, cameraRotationSpeed * Time.deltaTime);
-
-        if (inputCameraZoom < 0.0f)
+        if (inputCameraZoom < 0f)
         {
             if(distanceBtwCameraCharacter <= maxDistanceBtwCameraCharacter)
                 transform.position += transform.forward * inputCameraZoom * Time.deltaTime * zoomSpeed;
         }
 
-        if (inputCameraZoom > 0.0f)
+        if (inputCameraZoom > 0f)
         {
             if (distanceBtwCameraCharacter >= minDistanceBtwCameraCharacter)
                 transform.position += transform.forward * inputCameraZoom * Time.deltaTime * zoomSpeed;
         }
+
+        if(inputViewMode)
+        {
+            isTopView = !isTopView;
+            viewModeChangeEnable = true;
+        }
+
+        if (isTopView && viewModeChangeEnable)
+        {
+            timeAccForViewMode += Time.deltaTime;
+
+            if (timeAccForViewMode <= 1f)
+                transform.RotateAround(cameraPointObj.transform.position, cameraPointObj.transform.forward, timeAccForViewMode);
+            else
+            {
+                timeAccForViewMode = 0f;
+                viewModeChangeEnable = false;
+            }
+        }
+        else if(!isTopView && viewModeChangeEnable)
+        {
+            timeAccForViewMode += Time.deltaTime;
+
+            if (timeAccForViewMode <= 1f)
+                transform.RotateAround(cameraPointObj.transform.position, cameraPointObj.transform.forward, -timeAccForViewMode);
+            else
+            {
+                timeAccForViewMode = 0f;
+                viewModeChangeEnable = false;
+            }
+        }        
     }
 }
